@@ -1,0 +1,7 @@
+<% if current_user.favor?(micropost) %>
+<%# 既にお気に入りされているとき %>
+<%= link_to "お気に入り", favorite_path(micropost), method: :delete, class: 'btn btn-xs btn-warning' %>
+<% else %>
+<%# まだお気に入りされていないとき %>
+<%= link_to "お気に入り", favorites_path(favor_id: micropost.id), method: :post, class: 'btn btn-xs btn-default' %>
+<% end %>

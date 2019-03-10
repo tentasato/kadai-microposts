@@ -5,7 +5,7 @@ class MicropostsController < ApplicationController
       flash[:success] = 'メッセージを投稿しました。'
       redirect_to root_url
     else
-      @microposts = current_user.microposts.order('created_at DESC').page(params[:page])
+      @microposts = current_user.feed_microposts.order('created_at DESC').page(params[:page])
       flash.now[:danger] = 'メッセージの投稿に失敗しました。'
       render 'toppages/index'
     end
@@ -17,6 +17,11 @@ class MicropostsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
   
+  def favoring_users
+    @micropost = Micropost.find(params[:id])
+    @favoring_users = @micropost.favoring_users.page(params[:page])
+    counts(@micropost)
+  end  
  private
  
   def micropost_params
